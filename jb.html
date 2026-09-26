@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NoorAlden • PS4 Web Loader</title>
+<style>
+:root{--cyan:#20e8ff;--blue:#3f7cff;--violet:#9d5cff;--text:#f4fbff;--line:rgba(117,226,255,.24)}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#020812;color:var(--text);
+font:15px/1.45 "Segoe UI",system-ui,sans-serif;overflow:hidden}
+body{
+background:linear-gradient(180deg,rgba(0,7,20,.28),rgba(0,5,16,.82)),
+url("custom_background.jpg") center/cover fixed no-repeat}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;
+background:linear-gradient(rgba(32,232,255,.04) 1px,transparent 1px),
+linear-gradient(90deg,rgba(32,232,255,.04) 1px,transparent 1px);background-size:42px 42px}
+#brand{position:relative;z-index:4;display:flex;align-items:center;justify-content:space-between;
+padding:12px 18px;background:rgba(2,7,18,.58);border-bottom:1px solid var(--line);
+backdrop-filter:blur(14px);box-shadow:0 8px 30px rgba(0,0,0,.3)}
+.brand-left{display:flex;align-items:center;gap:11px}
+#brand img{width:42px;height:42px;object-fit:cover;border-radius:12px;border:1px solid rgba(100,225,255,.45);box-shadow:0 0 20px rgba(32,232,255,.22)}
+#brand b{font-size:17px;font-weight:900;letter-spacing:.13em}
+#brand span{font-size:10px;letter-spacing:.18em;color:var(--cyan)}
+#spin{position:fixed;z-index:3;top:50%;left:50%;width:82px;height:82px;margin:-41px 0 0 -41px;
+border:3px solid rgba(255,255,255,.08);border-top-color:var(--cyan);border-right-color:var(--violet);
+border-radius:50%;animation:spin 1s linear infinite;box-shadow:0 0 30px rgba(32,232,255,.22)}
+#spin::after{content:"";position:absolute;inset:11px;border:2px solid rgba(63,124,255,.3);
+border-bottom-color:var(--cyan);border-radius:50%;animation:spin .65s linear reverse infinite}
+#msg{position:fixed;z-index:3;top:calc(50% + 70px);left:16px;right:16px;
+transform:translateY(-50%);text-align:center;font-size:15px;letter-spacing:.6px;
+display:none;text-shadow:0 2px 10px #000}
+#wrap{position:relative;z-index:2;padding:16px 18px}
+#state,#out{display:none}
+body.done #spin,body.fail #spin{display:none}
+body.fail #msg,body.done #msg{display:block}
+body.done #msg{color:#7df5d2;font-weight:800;letter-spacing:2px}
+body.log #spin,body.log #msg{display:none}
+body.log #wrap{padding:18px}
+body.log #state{display:block;font-size:21px;font-weight:900;margin:0 0 10px;text-shadow:0 0 15px rgba(32,232,255,.25)}
+body.log #out{display:block;white-space:pre-wrap;font:12px/1.5 Consolas,monospace;
+background:rgba(3,9,21,.78);border:1px solid var(--line);border-radius:16px;
+padding:14px;height:calc(100vh - 150px);overflow-y:auto;box-shadow:0 15px 45px rgba(0,0,0,.45);
+backdrop-filter:blur(12px)}
+.ok,.safe{color:#7df5d2}.bad,.danger{color:#ff8d9b}.warn{color:#ffe27a}
+code{color:#a9d8ff}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:600px){#brand span{display:none}#brand{padding:10px 13px}}
+</style>
+</head>
+<body>
+<div id="brand">
+  <div class="brand-left"><img src="logo_raw.png" alt="" width="42" height="42"><b>NoorAlden</b></div>
+  <span>PS4 • WEB LOADER</span>
+</div>
+<div id="spin"></div>
+<div id="msg">Restart your console</div>
+<div id="wrap"><div id="state"></div><div id="out"></div></div>
+<script type="module">
+import "./jb.js?v=20";
+</script>
+</body>
+</html>
