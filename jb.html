@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ar" dir="rtl" manifest="cache.appcache">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>نور الدين • PS4 Web Loader</title>
+<style>
+:root{--cyan:#20e8ff;--violet:#9d5cff;--text:#f4fbff}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;min-height:100%;margin:0;overflow:hidden;background:#020812;color:var(--text);font-family:"Segoe UI",Tahoma,Arial,sans-serif}
+body{position:relative}
+#bg{position:fixed;inset:0;width:100%;height:100%;background:linear-gradient(180deg,rgba(0,6,18,.30),rgba(0,5,16,.70)),url("custom_background.jpg") center/cover no-repeat;z-index:0}
+#grid{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(rgba(32,232,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(32,232,255,.045) 1px,transparent 1px);background-size:42px 42px}
+#top{position:relative;z-index:4;height:66px;display:flex;align-items:center;padding:8px 18px;background:rgba(2,7,18,.60);border-bottom:1px solid rgba(96,224,255,.3);backdrop-filter:blur(13px)}
+#top img{width:44px;height:44px;border-radius:12px;border:1px solid rgba(125,235,255,.5);object-fit:cover;margin-left:11px}
+.name{font-size:25px;font-weight:950}.sub{font-size:9px;color:var(--cyan);letter-spacing:.18em}
+#spin{position:fixed;z-index:3;top:50%;left:50%;width:82px;height:82px;margin:-41px 0 0 -41px;border:3px solid rgba(255,255,255,.08);border-top-color:var(--cyan);border-right-color:var(--violet);border-radius:50%;animation:spin 1s linear infinite;box-shadow:0 0 32px rgba(32,232,255,.25)}
+#spin:after{content:"";position:absolute;inset:11px;border:2px solid rgba(63,124,255,.3);border-bottom-color:var(--cyan);border-radius:50%;animation:spin .65s linear reverse infinite}
+#msg{position:fixed;z-index:3;top:calc(50% + 72px);left:16px;right:16px;text-align:center;display:none;font-size:15px}
+#rights{position:fixed;z-index:4;bottom:9px;left:0;right:0;text-align:center;font-size:11px;color:rgba(226,242,250,.72)}
+#wrap{position:relative;z-index:2;padding:18px}
+#state,#out{display:none}
+body.done #spin,body.fail #spin{display:none}body.fail #msg,body.done #msg{display:block}
+body.done #msg{color:#7df5d2;font-weight:800}
+body.log #spin,body.log #msg{display:none}body.log #state{display:block;font-size:21px;font-weight:900;margin-bottom:10px}
+body.log #out{display:block;white-space:pre-wrap;font:12px/1.5 Consolas,monospace;background:rgba(3,9,21,.78);border:1px solid rgba(117,226,255,.24);border-radius:16px;padding:14px;height:calc(100vh - 140px);overflow:auto;backdrop-filter:blur(12px)}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div id="bg"></div><div id="grid"></div>
+<header id="top"><img src="logo_raw.png" alt=""><div><div class="name">نور الدين</div><div class="sub">PS4 • WEB LOADER</div></div></header>
+<div id="spin"></div><div id="msg">أعد تشغيل الجهاز</div>
+<div id="wrap"><div id="state"></div><div id="out"></div></div>
+<footer id="rights">© نور الدين — 07777476714 — جميع الحقوق محفوظة</footer>
+<script type="module">import "./jb.js?v=21";</script>
+</body></html>

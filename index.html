@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>نور الدين • PS4 Web Loader</title>
+<style>
+:root{--cyan:#20e8ff;--blue:#3478ff;--violet:#9d5cff;--text:#f5fbff;--muted:#b4ccdc}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;min-height:100%;margin:0}
+body{position:relative;overflow:hidden;background:#020812;color:var(--text);
+font-family:"Segoe UI",Tahoma,Arial,sans-serif}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;
+background:linear-gradient(180deg,rgba(0,6,18,.28),rgba(0,5,16,.66)),
+url("custom_background.jpg") center center/cover no-repeat}
+#grid{position:fixed;inset:0;z-index:1;pointer-events:none;
+background:linear-gradient(rgba(32,232,255,.055) 1px,transparent 1px),
+linear-gradient(90deg,rgba(32,232,255,.055) 1px,transparent 1px);
+background-size:42px 42px}
+#scan{position:fixed;inset:0;z-index:1;pointer-events:none;
+background:linear-gradient(transparent 0%,rgba(32,232,255,.025) 50%,transparent 100%);
+background-size:100% 7px;opacity:.65}
+#top{position:relative;z-index:4;height:72px;display:flex;align-items:center;
+justify-content:space-between;padding:9px 22px;background:rgba(2,7,18,.62);
+border-bottom:1px solid rgba(96,224,255,.32);backdrop-filter:blur(13px);
+box-shadow:0 8px 28px rgba(0,0,0,.35)}
+.brand{display:flex;align-items:center;gap:13px}
+.brand img{width:50px;height:50px;object-fit:cover;border-radius:14px;
+border:1px solid rgba(125,235,255,.55);box-shadow:0 0 24px rgba(32,232,255,.28)}
+.name{font-size:27px;font-weight:950;letter-spacing:.03em;text-shadow:0 0 18px rgba(32,232,255,.28)}
+.sub{font-size:10px;color:var(--cyan);letter-spacing:.2em;margin-top:1px}
+.badge{padding:7px 11px;border:1px solid rgba(32,232,255,.27);border-radius:999px;
+background:rgba(0,18,38,.46);font-size:10px;color:#bcecff;letter-spacing:.13em}
+#card{position:relative;z-index:3;width:min(760px,calc(100% - 34px));min-height:430px;
+margin:7vh auto 0;padding:34px 30px;text-align:center;
+display:flex;flex-direction:column;justify-content:center;align-items:center;
+background:linear-gradient(145deg,rgba(5,15,33,.70),rgba(3,8,20,.46));
+border:1px solid rgba(71,221,255,.30);border-radius:28px;
+box-shadow:0 28px 90px rgba(0,0,0,.58),0 0 55px rgba(32,130,255,.15);
+backdrop-filter:blur(15px)}
+#card:before,#card:after{content:"";position:absolute;width:70px;height:70px;pointer-events:none}
+#card:before{top:-1px;left:-1px;border-top:2px solid var(--cyan);border-left:2px solid var(--cyan);border-radius:28px 0 0}
+#card:after{right:-1px;bottom:-1px;border-right:2px solid var(--violet);border-bottom:2px solid var(--violet);border-radius:0 0 28px}
+#hero{width:122px;height:122px;object-fit:cover;border-radius:26px;
+border:1px solid rgba(140,240,255,.52);box-shadow:0 0 0 8px rgba(32,232,255,.045),0 0 45px rgba(32,232,255,.30);
+margin-bottom:16px}
+h1{font-size:30px;margin:0 0 5px;font-weight:950}
+#state{font-size:17px;font-weight:800;color:#eaf8ff;margin:0 0 9px}
+#det{font-size:13px;color:var(--muted);margin:0 0 14px}
+#det b{color:#fff}
+#cache{font-size:12px;color:#c0d5e3;padding:8px 14px;border-radius:999px;
+border:1px solid rgba(117,226,255,.18);background:rgba(0,12,28,.48)}
+#cache.cacheok{color:#7df5d2;border-color:rgba(125,245,210,.3)}
+#phone{font-size:19px;font-weight:900;letter-spacing:.12em;color:#9ff6ff;
+margin-top:18px;text-shadow:0 0 16px rgba(32,232,255,.35)}
+#rights{position:fixed;z-index:4;bottom:10px;left:0;right:0;text-align:center;
+font-size:11px;color:rgba(226,242,250,.72);letter-spacing:.04em}
+.ok{color:#7df5d2}.bad{color:#ff8d9b}.warn{color:#ffe27a}
+@media(max-width:600px){
+#top{height:64px;padding:7px 12px}.brand img{width:43px;height:43px}.name{font-size:22px}.badge{display:none}
+#card{margin-top:5vh;min-height:390px;width:calc(100% - 18px);padding:25px 15px}
+#hero{width:100px;height:100px}h1{font-size:25px}#phone{font-size:16px}
+}
+</style>
+</head>
+<body>
+<div id="bg"></div><div id="grid"></div><div id="scan"></div>
+<header id="top">
+  <div class="brand">
+    <img src="logo_raw.png" alt="">
+    <div><div class="name">نور الدين</div><div class="sub">PS4 • WEB LOADER</div></div>
+  </div>
+  <div class="badge">ELECTRONIC EDITION</div>
+</header>
+<main id="card">
+  <img id="hero" src="logo_raw.png" alt="">
+  <h1>نور الدين</h1>
+  <div id="state">جاري فحص النظام...</div>
+  <div id="det"></div>
+  <div id="cache"></div>
+  <div id="phone">07777476714</div>
+</main>
+<footer id="rights">© نور الدين — جميع الحقوق محفوظة</footer>
+<script>
+(function(){
+var s=document.getElementById("state"),d=document.getElementById("det"),c=document.getElementById("cache");
+function S(t,k){s.textContent=t;s.className=k||""} function C(t,ok){c.textContent=t;c.className=ok?"cacheok":""}
+var p=new URLSearchParams(location.search),key=null,n=null,m=/PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
+if(m){var x=parseInt(m[2],16).toString(16);if(x.length<2)x="0"+x;key=m[1]+"."+x;n=parseInt(m[1],10)*100+parseInt(x,10)}
+var forced=p.get("force")==="1",supported=forced||(n!==null&&{1302:1,1304:1,1350:1,1352:1}[n]===1);
+d.innerHTML="Firmware <b>"+(key||"unknown")+"</b> &middot; "+(supported?"supported":"not in this build's kernel table");
+function go(){S("جاري تشغيل الجيلبريك...","warn");location.replace("jb.html"+location.search)}
+function tap(msg,fn){S(msg,"warn");var f=function(){removeEventListener("click",f);removeEventListener("keydown",f);fn()};addEventListener("click",f);addEventListener("keydown",f)}
+if(!supported){S("إصدار غير مدعوم","bad");tap("اضغط X أو انقر للتشغيل رغم ذلك",go);return}
+var ac=window.applicationCache;
+if(!ac||!document.documentElement.hasAttribute("manifest"))go();
+else if(!navigator.onLine){C("وضع عدم الاتصال — من الكاش",true);go()}
+else if(ac.status===ac.IDLE){C("الكاش جاهز",true);go()}
+else if(ac.status===ac.UPDATEREADY){try{ac.swapCache()}catch(e){}C("تم تنزيل التحديث",true);tap("التحديث جاهز — اضغط X لإعادة التحميل",function(){location.reload()})}
+else{
+C("جاري تجهيز الكاش...");
+ac.addEventListener("downloading",function(){C("جاري حفظ الملفات للتشغيل بدون إنترنت...")});
+ac.addEventListener("progress",function(e){if(e&&e.total)C("جاري الحفظ "+Math.round(e.loaded/e.total*100)+"%")});
+ac.addEventListener("cached",function(){C("تم الحفظ للتشغيل بدون إنترنت",true);tap("تم التثبيت — اضغط X للمتابعة",go)});
+ac.addEventListener("noupdate",function(){C("الكاش جاهز",true);go()});
+ac.addEventListener("updateready",function(){try{ac.swapCache()}catch(e){}C("تم تحديث الكاش",true);tap("التحديث جاهز — اضغط X لإعادة التحميل",function(){location.reload()})});
+ac.addEventListener("error",function(){C("تعذر تحديث الكاش");tap("اضغط X للمتابعة",go)});
+}
+})();
+</script>
+</body></html>
